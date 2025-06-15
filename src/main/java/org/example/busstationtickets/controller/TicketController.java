@@ -1,4 +1,4 @@
-package org.example.busstationtickets.api;
+package org.example.busstationtickets.controller;
 
 import org.example.busstationtickets.model.Ticket;
 import org.example.busstationtickets.service.TicketService;

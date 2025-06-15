@@ -1,6 +1,6 @@
 package org.example.busstationtickets.service;
 
-import org.example.busstationtickets.dao.TicketRepository;
+import org.example.busstationtickets.repository.TicketRepository;
 import org.example.busstationtickets.model.Ticket;
 import org.springframework.stereotype.Service;
 

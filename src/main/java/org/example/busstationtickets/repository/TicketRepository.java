@@ -1,4 +1,4 @@
-package org.example.busstationtickets.dao;
+package org.example.busstationtickets.repository;
 
 import org.example.busstationtickets.model.Ticket;
 import org.springframework.data.repository.CrudRepository;
