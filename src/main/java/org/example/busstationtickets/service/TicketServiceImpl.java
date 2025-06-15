@@ -1,5 +1,7 @@
 package org.example.busstationtickets.service;
 
+import org.example.busstationtickets.dto.TicketCreateRequest;
+import org.example.busstationtickets.dto.TicketUpdateRequest;
 import org.example.busstationtickets.repository.TicketRepository;
 import org.example.busstationtickets.model.Ticket;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,15 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket addTicket(Ticket ticket) {
+    public Ticket addTicket(TicketCreateRequest request) {
+        Ticket ticket = new Ticket(
+                request.getTripDate(),
+                request.getTripName(),
+                request.getBusNumber(),
+                request.getPrice(),
+                request.getSeat(),
+                request.getDepartureTime()
+        );
         return ticketRepository.save(ticket);
     }
 
@@ -43,18 +53,18 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket updateTicket(Long id, Ticket newTicket) {
-        return ticketRepository.findById(id)
-                .map(ticket -> {
-                    ticket.setTripDate(newTicket.getTripDate());
-                    ticket.setTripName(newTicket.getTripName());
-                    ticket.setBusNumber(newTicket.getBusNumber());
-                    ticket.setPrice(newTicket.getPrice());
-                    ticket.setSeat(newTicket.getSeat());
-                    ticket.setDepartureTime(newTicket.getDepartureTime());
-                    return ticketRepository.save(ticket);
-                })
-                .orElseThrow(() -> new RuntimeException("Ticket not found with id " + id));
+    public Ticket updateTicket(Long id, TicketUpdateRequest request) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+
+        if (request.getTripDate() != null) ticket.setTripDate(request.getTripDate());
+        if (request.getTripName() != null) ticket.setTripName(request.getTripName());
+        if (request.getBusNumber() != null) ticket.setBusNumber(request.getBusNumber());
+        if (request.getPrice() != null) ticket.setPrice(request.getPrice());
+        if (request.getSeat() != null) ticket.setSeat(request.getSeat());
+        if (request.getDepartureTime() != null) ticket.setDepartureTime(request.getDepartureTime());
+
+        return ticketRepository.save(ticket);
     }
 
     @Override

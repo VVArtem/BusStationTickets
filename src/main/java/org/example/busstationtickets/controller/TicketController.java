@@ -1,5 +1,8 @@
 package org.example.busstationtickets.controller;
 
+import jakarta.validation.Valid;
+import org.example.busstationtickets.dto.TicketCreateRequest;
+import org.example.busstationtickets.dto.TicketUpdateRequest;
 import org.example.busstationtickets.model.Ticket;
 import org.example.busstationtickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +26,8 @@ public class TicketController {
 
     // Додавання квитка
     @PostMapping
-    public Ticket addTicket(@NonNull @RequestBody Ticket ticket) {
-        return ticketService.addTicket(ticket);
+    public Ticket addTicket(@Valid @RequestBody TicketCreateRequest request) {
+        return ticketService.addTicket(request);
     }
 
     // Отримати всі квитки
@@ -46,9 +49,9 @@ public class TicketController {
     }
 
     // Оновити квиток за id
-    @PutMapping(path = "/{id}")
-    public Ticket updateTicket(@PathVariable("id") Long id, @NonNull @RequestBody Ticket ticket) {
-        return ticketService.updateTicket(id, ticket);
+    @PutMapping("/{id}")
+    public Ticket updateTicket(@PathVariable Long id, @RequestBody TicketUpdateRequest request) {
+        return ticketService.updateTicket(id, request);
     }
 
     // Пошук квитків за назвою рейса
