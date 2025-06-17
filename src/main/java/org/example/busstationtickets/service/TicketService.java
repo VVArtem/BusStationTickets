@@ -1,10 +1,10 @@
 package org.example.busstationtickets.service;
 
 import org.example.busstationtickets.dto.TicketCreateRequest;
-import org.example.busstationtickets.dto.TicketUpdateRequest;
+import org.example.busstationtickets.dto.TicketFullUpdateRequest;
+import org.example.busstationtickets.dto.TicketPartUpdateRequest;
 import org.example.busstationtickets.model.Ticket;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +26,9 @@ public interface TicketService {
     void deleteAllTickets();
 
     // модифікація за id
-    Ticket updateTicket(Long id, TicketUpdateRequest request);
+    Ticket updateTicketPartially(Long id, TicketPartUpdateRequest request);
+
+    Ticket updateTicketFully(Long id, TicketFullUpdateRequest request);
 
     // перегляд за назвою рейса
     List<Ticket> findTicketsByTripName(String tripName);

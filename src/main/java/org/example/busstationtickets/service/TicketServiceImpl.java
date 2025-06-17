@@ -1,7 +1,8 @@
 package org.example.busstationtickets.service;
 
 import org.example.busstationtickets.dto.TicketCreateRequest;
-import org.example.busstationtickets.dto.TicketUpdateRequest;
+import org.example.busstationtickets.dto.TicketFullUpdateRequest;
+import org.example.busstationtickets.dto.TicketPartUpdateRequest;
 import org.example.busstationtickets.repository.TicketRepository;
 import org.example.busstationtickets.model.Ticket;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket updateTicket(Long id, TicketUpdateRequest request) {
+    public Ticket updateTicketPartially(Long id, TicketPartUpdateRequest request) {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket not found"));
 
@@ -66,6 +67,22 @@ public class TicketServiceImpl implements TicketService {
 
         return ticketRepository.save(ticket);
     }
+
+    @Override
+    public Ticket updateTicketFully(Long id, TicketFullUpdateRequest request) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ticket not found"));
+
+        ticket.setTripDate(request.getTripDate());
+        ticket.setTripName(request.getTripName());
+        ticket.setBusNumber(request.getBusNumber());
+        ticket.setPrice(request.getPrice());
+        ticket.setSeat(request.getSeat());
+        ticket.setDepartureTime(request.getDepartureTime());
+
+        return ticketRepository.save(ticket);
+    }
+
 
     @Override
     public List<Ticket> findTicketsByTripName(String tripName) {

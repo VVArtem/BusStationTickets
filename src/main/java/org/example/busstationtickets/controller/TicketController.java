@@ -2,11 +2,11 @@ package org.example.busstationtickets.controller;
 
 import jakarta.validation.Valid;
 import org.example.busstationtickets.dto.TicketCreateRequest;
-import org.example.busstationtickets.dto.TicketUpdateRequest;
+import org.example.busstationtickets.dto.TicketFullUpdateRequest;
+import org.example.busstationtickets.dto.TicketPartUpdateRequest;
 import org.example.busstationtickets.model.Ticket;
 import org.example.busstationtickets.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
@@ -48,10 +48,16 @@ public class TicketController {
         ticketService.deleteTicketById(id);
     }
 
-    // Оновити квиток за id
+    // Оновити квиток за id (частково)
+    @PatchMapping("/{id}")
+    public Ticket partUpdateTicket(@PathVariable Long id, @RequestBody TicketPartUpdateRequest request) {
+        return ticketService.updateTicketPartially(id, request);
+    }
+
+    // Оновити квиток за id (повністю)
     @PutMapping("/{id}")
-    public Ticket updateTicket(@PathVariable Long id, @RequestBody TicketUpdateRequest request) {
-        return ticketService.updateTicket(id, request);
+    public Ticket fullUpdateTicket(@PathVariable Long id, @RequestBody TicketFullUpdateRequest request) {
+        return ticketService.updateTicketFully(id, request);
     }
 
     // Пошук квитків за назвою рейса
@@ -63,7 +69,6 @@ public class TicketController {
     // Пошук квитків за часом відправлення
     @GetMapping("/search/byDepartureTime")
     public List<Ticket> findByDepartureTime(@RequestParam String departureTime) {
-        // парсимо рядок у LocalTime
         LocalTime time = LocalTime.parse(departureTime);
         return ticketService.findTicketsByDepartureTime(time);
     }

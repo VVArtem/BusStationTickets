@@ -3,7 +3,7 @@ package org.example.busstationtickets.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class TicketUpdateRequest {
+public class TicketPartUpdateRequest {
 
     private LocalDate tripDate;
     private String tripName;
