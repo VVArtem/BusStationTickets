@@ -50,13 +50,13 @@ public class TicketController {
 
     // Оновити квиток за id (частково)
     @PatchMapping("/{id}")
-    public Ticket partUpdateTicket(@PathVariable Long id, @RequestBody TicketPartUpdateRequest request) {
+    public Ticket partUpdateTicket(@PathVariable Long id, @Valid @RequestBody TicketPartUpdateRequest request) {
         return ticketService.updateTicketPartially(id, request);
     }
 
     // Оновити квиток за id (повністю)
     @PutMapping("/{id}")
-    public Ticket fullUpdateTicket(@PathVariable Long id, @RequestBody TicketFullUpdateRequest request) {
+    public Ticket fullUpdateTicket(@PathVariable Long id, @Valid @RequestBody TicketFullUpdateRequest request) {
         return ticketService.updateTicketFully(id, request);
     }
 
